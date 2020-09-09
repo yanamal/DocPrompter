@@ -20,7 +20,7 @@ body {
     color: wheat
 }
 
-#promptArea {
+.mirrored {
     /* flip/mirror text: */
     -moz-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
@@ -28,7 +28,9 @@ body {
     transform: scaleX(-1);
     -ms-filter: fliph; /*IE*/
     filter: fliph; /*IE*/
+}
 
+#promptArea {
     font-size:100%;
 
     background-color: black;
@@ -64,12 +66,13 @@ body {
     height:calc(100% - 1em)
 }
 
-.set_span{
+.setting_span{
     display: inline-block;
     border: 1px solid darkgray;
     padding: 2px;
     margin-right: 20px;
 }
+
 button {
     margin:2px;
 }

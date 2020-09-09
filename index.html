@@ -8,13 +8,17 @@
   <body>
 
     <div id='controls'>
-        <span class='set_span'>
+        <span class='setting_span'>
             <input type="number" value="100" id="textsize" class="setting" style="width:4em" oninput="setSize()"/> 
             Text size (% of original)
         </span>
-        <span class='set_span'>
+        <span class='setting_span'>
             <input type="number" value="1" step="0.2" id="scrollspeed" class="setting" style="width:4em" oninput="setScrollSpeed()"/>
             Scroll speed 
+        </span>
+        <span class='setting_span'>
+            <input type="checkbox" id="mirrortext" class="setting" checked="true" oninput="setMirrored()">
+            Mirror text
         </span>
 
         <br/>

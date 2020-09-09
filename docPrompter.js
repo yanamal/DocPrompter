@@ -16,6 +16,10 @@ urlParams.forEach(function(value, key) {
     if(document.getElementById(key)) {
         // TODO: also have a field for fileId?
         document.getElementById(key).value = value
+        if(document.getElementById(key).type == 'checkbox') {
+            // special case for actual checkbox value, because why would input value be consistently sensible.
+            document.getElementById(key).checked = (value=='true')
+        }
     }
 })
 
@@ -96,6 +100,10 @@ function updateSettings(){
     // TODO: update one setting at a time instead?..
     for(let s of document.getElementsByClassName('setting')){
         urlParams.set(s.id, s.value)
+        if(s.type == 'checkbox') {
+            // special case for actual checkbox value, because why would input value be consistently sensible.
+            urlParams.set(s.id, s.checked)
+        }
     }
     new_url = `${location.protocol}//${location.host}${location.pathname}?${urlParams.toString()}`
     window.history.replaceState({}, '', new_url)
@@ -113,6 +121,19 @@ function setScrollSpeed(){
     updateSettings()
 }
 setScrollSpeed()
+
+function setMirrored(){
+    if (document.getElementById('mirrortext').checked){
+        document.getElementById('promptArea').classList.add("mirrored");
+        console.log(document.getElementById('promptArea').classList)
+    }
+    else{
+        document.getElementById('promptArea').classList.remove("mirrored");
+        console.log(document.getElementById('promptArea').classList)
+    }
+    updateSettings()
+}
+setMirrored()
 
 
 const scroll_fps = 30
