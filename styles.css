@@ -2,7 +2,23 @@ body {
     height:100vh;
     width:100vw;
     margin: 0px;
+    overflow:hidden;
+    background-color: black;
 }
+
+#errors {
+    background-color: white;
+}
+
+#controls {
+    background-color: #212121;
+    padding: 10px;
+    position: absolute;
+    width: 100%;
+    z-index: 99;
+    top: 0px;
+}
+
 #promptText {
     /* flip/mirror text: */
     -moz-transform: scaleX(-1);
@@ -12,10 +28,21 @@ body {
     -ms-filter: fliph; /*IE*/
     filter: fliph; /*IE*/
 
+    font-size:100%;
+
     background-color: black;
-    height:100%;
-    width:100%;
+
+    /*fit screen, hide scrollbars:*/
+    height:98%;
+    width:98%;
+    margin:1%;
     overflow:scroll;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#promptText::-webkit-scrollbar { 
+    display: none;  /* hide scrollbars on Safari and Chrome */
 }
 
 /* Invert color on all children of the prompter area: */

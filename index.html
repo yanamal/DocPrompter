@@ -8,11 +8,11 @@
   <body>
 
     <div id='controls'>
-        <button onclick="document.documentElement.webkitRequestFullScreen()">fullscreen</button>
+        <button onclick="startPrompting()">start</button>
     </div>
 
-    <pre id="content" style="white-space: pre-wrap;"></pre>
-    <div id="promptText"></div>
+    <pre id="errors" style="white-space: pre-wrap;margin:0%"></pre>
+    <div id="promptText" onclick="stopPrompting()"></div>
 
     <script type="text/javascript" src="docPrompter.js"> 
     </script>

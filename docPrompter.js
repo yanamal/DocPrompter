@@ -37,49 +37,48 @@ function initClient() {
         showFileHTML(urlParams.get('fileId'));
     }
   }, function(error) {
-    appendPre(JSON.stringify(error, null, 2));
+    showError(JSON.stringify(error, null, 2));
   });
 }
 
 /**
  * Append a pre element to the body containing the given message
- * as its text node. Used to display the results of the API call.
+ * as its text node. Hack to display error messages when they aren't handled in some other way.
  *
  * @param {string} message Text to be placed in pre element.
  */
-function appendPre(message) {
-  var pre = document.getElementById('content');
+function showError(message) {
+  var pre = document.getElementById('errors');
   var textContent = document.createTextNode(message + '\n');
   pre.appendChild(textContent);
 }
 
 /**
- * Print files.
+ * Display the HTML of a given Google Drive file in the telepromter text element.
+ * 
+ * @param {string} fileId google drive fileId for the file to display
  */
-function listFiles() {
-  gapi.client.drive.files.list({
-    'pageSize': 10,
-    'fields': "nextPageToken, files(id, name)"
-  }).then(function(response) {
-    appendPre('Files:');
-    var files = response.result.files;
-    if (files && files.length > 0) {
-      for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        appendPre(file.name + ' (' + file.id + ')');
-      }
-    } else {
-      appendPre('No files found.');
-    }
-  });
-}
-
 function showFileHTML(fileId) {
   gapi.client.drive.files.export({
     'fileId': fileId,
     'mimeType': "text/html"
   }).then(function(response) {
-      console.log(response)
+      // Put googl docs contents into the telempromter text element:
       document.getElementById('promptText').innerHTML = response.body;
+      // Strip out font-sizee property from text, so that it can be controlled programmatically:
+      for(var e of document.getElementById('promptText').querySelectorAll('*')) {
+        e.style.removeProperty('font-size')
+      }
   })
+}
+
+function startPrompting() {
+    document.documentElement.webkitRequestFullScreen()
+    document.getElementById('controls').hidden = true
+    console.log('start')
+}
+
+function stopPrompting() {
+    document.getElementById('controls').hidden = false
+    console.log('stop')
 }
