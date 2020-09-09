@@ -63,3 +63,13 @@ body {
 .promptSpacer {
     height:calc(100% - 1em)
 }
+
+.set_span{
+    display: inline-block;
+    border: 1px solid darkgray;
+    padding: 2px;
+    margin-right: 20px;
+}
+button {
+    margin:2px;
+}

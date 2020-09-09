@@ -107,11 +107,34 @@ function setSize() {
 }
 setSize()
 
+let scrollSpeed = 1
+function setScrollSpeed(){
+    scrollSpeed = parseFloat(document.getElementById('scrollspeed').value)
+    updateSettings()
+}
+setScrollSpeed()
+
 
 const scroll_fps = 30
 let scrollTimer = null
+/**
+ * do a frame's worth of scrolling - on average, scroll by scrollSpeed every frame;
+ * but scrollBy can only deal with integer scroll amounts, so store remainder in a static variable 
+ * and use it when we've accumulated enough.
+ */
+
 function scroll_frame() {
-    document.getElementById('promptArea').scrollBy(0,2)
+    if( typeof scroll_frame.remainder == 'undefined' ) {
+            scroll_frame.remainder = 0;
+    }
+
+    scroll_frame.remainder += scrollSpeed
+    if(scroll_frame.remainder >= 1){
+        scrollby = Math.floor(scroll_frame.remainder)
+        scroll_frame.remainder -= scrollby
+        document.getElementById('promptArea').scrollBy(0,scrollby)
+    }
+
 }
 
 function startScrolling() {
@@ -131,5 +154,21 @@ function stopScrolling() {
     }
 }
 
+function toggleScrolling(){
+    if(scrollTimer) {
+        stopScrolling()
+    }
+    else {
+        startScrolling()
+    }
+}
+
+document.onkeydown = function(e){
+    if (e.keyCode == '32' || e.key==' ') {
+        toggleScrolling()
+        e.preventDefault() // Don't scroll on spacebar
+    }
+
+}
 
 window.scrollTo(0,0) // Don't know why the scroll gets messed up sometimes on reload.

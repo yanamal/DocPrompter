@@ -8,11 +8,18 @@
   <body>
 
     <div id='controls'>
-        <input type="number" value="100" id="textsize" class="setting" style="width:4em" oninput="setSize()"/> 
-        Text size (% of original)
+        <span class='set_span'>
+            <input type="number" value="100" id="textsize" class="setting" style="width:4em" oninput="setSize()"/> 
+            Text size (% of original)
+        </span>
+        <span class='set_span'>
+            <input type="number" value="1" step="0.2" id="scrollspeed" class="setting" style="width:4em" oninput="setScrollSpeed()"/>
+            Scroll speed 
+        </span>
+
         <br/>
-        <button onclick="startPrompting()">start prompter</button>
-        <button onclick="showFileHTML()">refresh document</button>
+        <button onclick="startPrompting()">start</button>
+        <button onclick="showFileHTML()">reload document</button>
     </div>
 
     <pre id="errors" style="white-space: pre-wrap;margin:0%"></pre>
