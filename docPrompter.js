@@ -27,7 +27,8 @@ function initClient() {
     apiKey: API_KEY,
     clientId: CLIENT_ID,
     discoveryDocs: DISCOVERY_DOCS,
-    scope: SCOPES
+    scope: SCOPES,
+    ux_mode: 'redirect',
   }).then(function () {
     if(!gapi.auth2.getAuthInstance().isSignedIn.get()) {
         gapi.auth2.getAuthInstance().signIn();
