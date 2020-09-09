@@ -11,6 +11,14 @@ const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly https://
 
 const urlParams = new URLSearchParams(window.location.search)
 
+// put values of url parameters into the controls
+urlParams.forEach(function(value, key) {
+    if(document.getElementById(key)) {
+        // TODO: also have a field for fileId?
+        document.getElementById(key).value = value
+    }
+})
+
 /**
  *  On load, called to load the auth2 library and API client library.
  */
@@ -75,17 +83,23 @@ function showFileHTML(fileId) {
 function startPrompting() {
     document.documentElement.webkitRequestFullScreen()
     document.getElementById('controls').hidden = true
-    console.log('start')
 }
 
 function stopPrompting() {
     document.getElementById('controls').hidden = false
-    console.log('stop')
+}
+
+function updateSettings(){
+    // TODO: update one setting at a time instead?..
+    for(let s of document.getElementsByClassName('setting')){
+        urlParams.set(s.id, s.value)
+    }
+    new_url = `${location.protocol}//${location.host}${location.pathname}?${urlParams.toString()}`
+    window.history.replaceState({}, '', new_url)
 }
 
 function setSize() {
     document.getElementById('promptText').style.fontSize = document.getElementById('textsize').value+'%'
-    console.log(document.getElementById('textsize').value+'%')
-    console.log(document.getElementById('textsize'))
-    console.log(document.getElementById('promptText').style.fontSize)
+    updateSettings()
 }
+setSize()
