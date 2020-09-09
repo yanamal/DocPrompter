@@ -1,0 +1,17 @@
+#promptText {
+    /* flip/mirror text: */
+    -moz-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1);
+    -ms-filter: fliph; /*IE*/
+    filter: fliph; /*IE*/
+
+    background-color: black;
+}
+
+/* Invert color on all children of the prompter area: */
+#promptText>*{
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
