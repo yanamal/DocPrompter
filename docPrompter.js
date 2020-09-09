@@ -1,13 +1,19 @@
 // Client ID and API key from the Developer Console
-var CLIENT_ID = '528299083579-0so7dj6dhbcu07d9btm7k7srpqseedm8.apps.googleusercontent.com';
-var API_KEY = 'AIzaSyA8mlbMBwqQTQ8d6UL8fofDdwOvD744_Nw';
+const CLIENT_ID = '528299083579-0so7dj6dhbcu07d9btm7k7srpqseedm8.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyA8mlbMBwqQTQ8d6UL8fofDdwOvD744_Nw';
 
 // Array of API discovery doc URLs for APIs used by the quickstart
-var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
-var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/drive.readonly';
+const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/drive.readonly';
+
+const urlParams = new URLSearchParams(window.location.search)
+
+if(urlParams.has('fileId')) {
+    var fileId
+}
 
 /**
  *  On load, called to load the auth2 library and API client library.
@@ -27,8 +33,12 @@ function initClient() {
     discoveryDocs: DISCOVERY_DOCS,
     scope: SCOPES
   }).then(function () {
-    gapi.auth2.getAuthInstance().signIn();
-    showFileHTML();
+    if(!gapi.auth2.getAuthInstance().isSignedIn.get()) {
+        gapi.auth2.getAuthInstance().signIn();
+    }
+    if(urlParams.has('fileId')) {
+        showFileHTML(urlParams.get('fileId'));
+    }
   }, function(error) {
     appendPre(JSON.stringify(error, null, 2));
   });
@@ -67,7 +77,7 @@ function listFiles() {
   });
 }
 
-function showFileHTML(fileId='1u3YdhlADbCUw5ka9r8oKGJ21LLTFLfZEf0cSgrr6hOQ') {
+function showFileHTML(fileId) {
   gapi.client.drive.files.export({
     'fileId': fileId,
     'mimeType': "text/html"
