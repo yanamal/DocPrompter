@@ -11,10 +11,6 @@ const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly https://
 
 const urlParams = new URLSearchParams(window.location.search)
 
-if(urlParams.has('fileId')) {
-    var fileId
-}
-
 /**
  *  On load, called to load the auth2 library and API client library.
  */
