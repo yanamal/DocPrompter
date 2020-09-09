@@ -82,3 +82,10 @@ function stopPrompting() {
     document.getElementById('controls').hidden = false
     console.log('stop')
 }
+
+function setSize() {
+    document.getElementById('promptText').style.fontSize = document.getElementById('textsize').value+'%'
+    console.log(document.getElementById('textsize').value+'%')
+    console.log(document.getElementById('textsize'))
+    console.log(document.getElementById('promptText').style.fontSize)
+}
