@@ -84,10 +84,12 @@ function showFileHTML() {
 function startPrompting() {
     document.documentElement.webkitRequestFullScreen()
     document.getElementById('controls').hidden = true
+    startScrolling() 
 }
 
 function stopPrompting() {
     document.getElementById('controls').hidden = false
+    stopScrolling()
 }
 
 function updateSettings(){
@@ -104,6 +106,30 @@ function setSize() {
     updateSettings()
 }
 setSize()
+
+
+const scroll_fps = 30
+let scrollTimer = null
+function scroll_frame() {
+    document.getElementById('promptArea').scrollBy(0,2)
+}
+
+function startScrolling() {
+    scrollTimer = setInterval(scroll_frame, 1000.0/scroll_fps)
+
+    // Focus on the teleprompter area, to pass through scrolling user actions(e.g. arrow keys, scroll wheel)
+    window.setTimeout(function(){
+        document.getElementById('promptArea').focus()
+        console.log(document.activeElement)
+    }, 0)
+}
+
+function stopScrolling() {
+    if(scrollTimer) {
+        clearInterval(scrollTimer)
+        scrollTimer = null
+    }
+}
 
 
 window.scrollTo(0,0) // Don't know why the scroll gets messed up sometimes on reload.

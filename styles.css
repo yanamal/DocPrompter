@@ -46,6 +46,11 @@ body {
     display: none;  /* hide scrollbars on Safari and Chrome */
 }
 
+/* don't show an outline when "focused" */
+#promptArea:focus {
+    outline-width: 0;
+}
+
 /* Invert color on all children of the prompter area: */
 #promptArea>*{
     -webkit-filter: invert(100%);
