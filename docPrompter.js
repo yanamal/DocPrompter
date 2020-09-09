@@ -42,7 +42,7 @@ function initClient() {
         gapi.auth2.getAuthInstance().signIn();
     }
     if(urlParams.has('fileId')) {
-        showFileHTML(urlParams.get('fileId'));
+        showFileHTML();
     }
   }, function(error) {
     showError(JSON.stringify(error, null, 2));
@@ -66,7 +66,8 @@ function showError(message) {
  * 
  * @param {string} fileId google drive fileId for the file to display
  */
-function showFileHTML(fileId) {
+function showFileHTML() {
+  fileId = urlParams.get('fileId')
   gapi.client.drive.files.export({
     'fileId': fileId,
     'mimeType': "text/html"
@@ -103,3 +104,6 @@ function setSize() {
     updateSettings()
 }
 setSize()
+
+
+window.scrollTo(0,0) // Don't know why the scroll gets messed up sometimes on reload.
