@@ -99,7 +99,7 @@ function updateSettings(){
 }
 
 function setSize() {
-    document.getElementById('promptText').style.fontSize = document.getElementById('textsize').value+'%'
+    document.getElementById('promptArea').style.fontSize = document.getElementById('textsize').value+'%'
     updateSettings()
 }
 setSize()

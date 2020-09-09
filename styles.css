@@ -20,7 +20,7 @@ body {
     color: wheat
 }
 
-#promptText {
+#promptArea {
     /* flip/mirror text: */
     -moz-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
@@ -42,12 +42,19 @@ body {
     scrollbar-width: none;  /* Firefox */
 }
 
-#promptText::-webkit-scrollbar { 
+#promptArea::-webkit-scrollbar { 
     display: none;  /* hide scrollbars on Safari and Chrome */
 }
 
 /* Invert color on all children of the prompter area: */
-#promptText>*{
+#promptArea>*{
     -webkit-filter: invert(100%);
     filter: invert(100%);
+}
+
+/* spacer elements to make it possible to scroll all the way up/down
+   so that only top/botttom line of text is visible
+ */
+.promptSpacer {
+    height:calc(100% - 1em)
 }
