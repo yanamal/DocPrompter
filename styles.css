@@ -6,6 +6,7 @@ body {
     background-color: black;
 }
 
+
 #errors {
     background-color: white;
 }
@@ -14,10 +15,15 @@ body {
     background-color: #212121;
     padding: 10px;
     position: absolute;
-    width: 100%;
+    width:calc(100% - 20px);
     z-index: 99;
     top: 0px;
     color: wheat
+}
+
+
+#controls a:link, #controls a:visited {
+    color:whitesmoke;
 }
 
 .mirrored {
