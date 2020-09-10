@@ -172,6 +172,8 @@ function openPicker() {
 function filePicked(data) {
     if(data.action=='picked') {
         urlParams.set('fileId', data.docs[0].id)
+        // TODO: somehow get the title when showing file HTML (separate API call? can I be bothered?)
+        document.title += ` (${data.docs[0].name})`
         updateSettings()
         showFileHTML()
     }
