@@ -114,7 +114,8 @@ function showFileHTML() {
 function startPrompting() {
     document.documentElement.webkitRequestFullScreen()
     document.getElementById('controls').hidden = true
-    startScrolling() 
+    if(document.getElementById('scrollonstart').checked)
+        startScrolling() 
 }
 
 function stopPrompting() {
@@ -158,6 +159,11 @@ function setMirrored(){
     updateSettings()
 }
 setMirrored()
+
+function setAutoScroll() {
+    updateSettings()
+}
+setAutoScroll()
 
 function openPicker() {
     if(picker.setVisible)
