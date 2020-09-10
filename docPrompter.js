@@ -201,13 +201,16 @@ function scroll_frame() {
 }
 
 function startScrolling() {
-    scrollTimer = setInterval(scroll_frame, 1000.0/scroll_fps)
-
+    if(!scrollTimer){
+        scrollTimer = setInterval(scroll_frame, 1000.0/scroll_fps)
+    }
+    
     // Focus on the teleprompter area, to pass through scrolling user actions(e.g. arrow keys, scroll wheel)
     window.setTimeout(function(){
         document.getElementById('promptArea').focus()
         console.log(document.activeElement)
     }, 0)
+
 }
 
 function stopScrolling() {
