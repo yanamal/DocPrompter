@@ -26,7 +26,18 @@ urlParams.forEach(function(value, key) {
  *  On load, called to load the auth2 library and API client library.
  */
 function handlePageLoad() {
+  console.log('loaded page')
   gapi.load('client:auth2', initClient);
+}
+
+/**
+ *  Sign out the user upon button click.
+ */
+function handleSignoutClick() {
+    gapi.auth2.getAuthInstance().signOut().then(function () {
+        console.log(gapi.auth2.getAuthInstance().isSignedIn.get())
+        location.reload()
+    })
 }
 
 /**
@@ -34,6 +45,8 @@ function handlePageLoad() {
  *  listeners.
  */
 function initClient() {
+
+  console.log('in initClient')
   gapi.client.init({
     apiKey: API_KEY,
     clientId: CLIENT_ID,
@@ -41,10 +54,21 @@ function initClient() {
     scope: SCOPES,
     ux_mode: 'redirect',
   }).then(function () {
+    console.log('initialized')
     // Sign in if necessary:
     if(!gapi.auth2.getAuthInstance().isSignedIn.get()) {
-        gapi.auth2.getAuthInstance().signIn();
+        console.log('signing in')
+        gapi.auth2.getAuthInstance().signIn({
+            prompt: 'select_account'
+        });
     }
+
+    // initialize settings:
+    setSize()
+    setScrollSpeed()
+    setMirrored()
+    setAutoScroll()
+
 
     // Initialize file picker:  
     gapi.load('picker', initPicker);
@@ -54,6 +78,9 @@ function initClient() {
         showFileHTML();
     }
   }, function(error) {
+
+    console.log('error')
+    console.log(JSON.stringify(error, null, 2))
     showError(JSON.stringify(error, null, 2));
   });
 }
@@ -123,30 +150,32 @@ function stopPrompting() {
 }
 
 function updateSettings(){
-    // TODO: update one setting at a time instead?..
-    for(let s of document.getElementsByClassName('setting')){
-        urlParams.set(s.id, s.value)
-        if(s.type == 'checkbox') {
-            // special case for actual checkbox value, because why would input value be consistently sensible.
-            urlParams.set(s.id, s.checked)
+    // Only do anything if already signed in, because jesus fucking christ is it completely inscrutiably
+    // how the Google sign-in flow works and wtf it expects from the URL
+    if(gapi && gapi.auth2.getAuthInstance().isSignedIn.get()){
+        // TODO: update one setting at a time instead?..
+        for(let s of document.getElementsByClassName('setting')){
+            urlParams.set(s.id, s.value)
+            if(s.type == 'checkbox') {
+                // special case for actual checkbox value, because why would input value be consistently sensible.
+                urlParams.set(s.id, s.checked)
+            }
         }
+        new_url = `${location.protocol}//${location.host}${location.pathname}?${urlParams.toString()}${location.hash}`
+        window.history.replaceState({}, '', new_url)
     }
-    new_url = `${location.protocol}//${location.host}${location.pathname}?${urlParams.toString()}`
-    window.history.replaceState({}, '', new_url)
 }
 
 function setSize() {
     document.getElementById('promptArea').style.fontSize = document.getElementById('textsize').value+'%'
     updateSettings()
 }
-setSize()
 
 let scrollSpeed = 1
 function setScrollSpeed(){
     scrollSpeed = parseFloat(document.getElementById('scrollspeed').value)
     updateSettings()
 }
-setScrollSpeed()
 
 function setMirrored(){
     if (document.getElementById('mirrortext').checked){
@@ -157,12 +186,10 @@ function setMirrored(){
     }
     updateSettings()
 }
-setMirrored()
 
 function setAutoScroll() {
     updateSettings()
 }
-setAutoScroll()
 
 function openPicker() {
     if(picker.setVisible)
