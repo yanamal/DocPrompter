@@ -42,15 +42,41 @@ function initClient() {
     scope: SCOPES,
     ux_mode: 'redirect',
   }).then(function () {
+    // Sign in if necessary:
     if(!gapi.auth2.getAuthInstance().isSignedIn.get()) {
         gapi.auth2.getAuthInstance().signIn();
     }
+
+    // Initialize file picker:  
+    gapi.load('picker', initPicker);
+
+    // Loat the file (if one is specified)
     if(urlParams.has('fileId')) {
         showFileHTML();
     }
   }, function(error) {
     showError(JSON.stringify(error, null, 2));
   });
+}
+
+let picker=null
+function initPicker() {
+    // Initialize fie picker:
+    jesus_christ_I_just_wanted_a_goddamn_token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token
+    console.log(jesus_christ_I_just_wanted_a_goddamn_token)
+    
+    // All this to set it to list view instead of grid view. And it for some reason DISABLES grid view.
+    let view = new google.picker.DocsView(google.picker.ViewId.DOCS)
+    view.setMode(google.picker.DocsViewMode.LIST)
+
+    picker = new google.picker.PickerBuilder().
+              addView(view).
+              disableFeature(google.picker.Feature.MULTISELECT_ENABLED).
+              setOAuthToken(jesus_christ_I_just_wanted_a_goddamn_token).
+              setDeveloperKey(API_KEY).
+              setCallback(filePicked).
+              build();
+    document.getElementById('docselector').disabled = false
 }
 
 /**
@@ -125,16 +151,26 @@ setScrollSpeed()
 function setMirrored(){
     if (document.getElementById('mirrortext').checked){
         document.getElementById('promptArea').classList.add("mirrored");
-        console.log(document.getElementById('promptArea').classList)
     }
     else{
         document.getElementById('promptArea').classList.remove("mirrored");
-        console.log(document.getElementById('promptArea').classList)
     }
     updateSettings()
 }
 setMirrored()
 
+function openPicker() {
+    if(picker.setVisible)
+        picker.setVisible(true);
+}
+
+function filePicked(data) {
+    if(data.action=='picked') {
+        urlParams.set('fileId', data.docs[0].id)
+        updateSettings()
+        showFileHTML()
+    }
+}
 
 const scroll_fps = 30
 let scrollTimer = null
