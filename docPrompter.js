@@ -14,7 +14,6 @@ const urlParams = new URLSearchParams(window.location.search)
 // put values of url parameters into the controls
 urlParams.forEach(function(value, key) {
     if(document.getElementById(key)) {
-        // TODO: also have a field for fileId?
         document.getElementById(key).value = value
         if(document.getElementById(key).type == 'checkbox') {
             // special case for actual checkbox value, because why would input value be consistently sensible.
@@ -204,7 +203,7 @@ function startScrolling() {
     if(!scrollTimer){
         scrollTimer = setInterval(scroll_frame, 1000.0/scroll_fps)
     }
-    
+
     // Focus on the teleprompter area, to pass through scrolling user actions(e.g. arrow keys, scroll wheel)
     window.setTimeout(function(){
         document.getElementById('promptArea').focus()
