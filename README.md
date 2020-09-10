@@ -13,7 +13,8 @@ There aren't very many settings or controls - you can:
 - Mirror the text or not
 - Make it scroll as soon as you press the "Start" button or not
 - Start and stop scrolling by pressing the spacebar
+- Control the scroll position of the text by regular browser means, e.g. mousewheel or up/down keys
 
-The app is hosted right [here](https://yanamal.github.io/DocPrompter) via GitHub Pages
+The app is hosted right [here](https://yanamal.github.io/DocPrompter) via GitHub Pages. 
 It's an entirely client-side app (obviously, since it's hosted directly on GitHub) and it does not save or use any information about you, except for displaying the contents of a google doc you have access to.
 
