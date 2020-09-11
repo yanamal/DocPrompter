@@ -24,10 +24,10 @@ In order to get the app to work for you, you may need to:
 Because Google API uses third-party cookies, but also Google's browsers seem to disable third-party cookies by default (especially on mobile).
 - Hit "Advanced" and "coninue anyway" on a scary warning about how my app is not verified. 
 Because "Verification may take 4-6 weeks" and there are lots of hoops to jump through. Especially for an open-source app which just does one thing.
-- Agree to let the app have access to your profile picture/email/whatever - in addition to Google Drive read-only access. 
+- Agree to let the app have access to your profile picture/email/whatever - in addition to the Google Drive read-only access it actually needs. 
 Because apparently there is no way to turn that off. 
 - On Chrome for Android, "Add to Home Screen" and open from the home screen in order to get rid of the nav bar in full-screen mode. 
-Because despite the fact that Google Android tells you you have to pull down to get the nav bar back, Google Chrome for Android refuses to hide the navbar when fullscreen is requested. See also:
+Because despite the fact that Google Android tells you you have to pull down to get the nav bar back in full screen mode, Google Chrome for Android refuses to hide the navbar when fullscreen is requested. See also:
   - [Reddit thread about nav bar](https://www.reddit.com/r/GooglePixel/comments/ats1ad/navigation_bar_in_chrome_fullscreen/)
   - [adb commands for permanently hiding nav bar](https://android.gadgethacks.com/how-to/hide-navigation-status-bars-your-galaxy-s8-for-even-more-screen-real-estate-no-root-needed-0177297/)
 
