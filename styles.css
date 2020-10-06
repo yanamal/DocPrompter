@@ -94,3 +94,18 @@ input {
         font-size: 20pt
     }
 } 
+
+#googleSignIn {
+    background:url(./google_signin_buttons/btn_google_signin_dark_normal_web@2x.png) no-repeat;
+    background-size: 100%;
+    border:none;
+    outline: none;
+    width:191px;
+    height:46px;
+}
+
+#googleSignIn:active {
+    background:url(./google_signin_buttons/btn_google_signin_dark_pressed_web@2x.png) no-repeat;
+    background-size: 100%;
+    outline: none;
+}

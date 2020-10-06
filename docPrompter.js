@@ -22,28 +22,26 @@ urlParams.forEach(function(value, key) {
     }
 })
 
-/**
- *  On load, called to load the auth2 library and API client library.
- */
-function handlePageLoad() {
-  console.log('loaded page')
-  gapi.load('client:auth2', initClient);
-}
-
-/**
- *  Sign out the user upon button click.
- */
 function handleSignoutClick() {
     gapi.auth2.getAuthInstance().signOut().then(function () {
         console.log(gapi.auth2.getAuthInstance().isSignedIn.get())
+        document.getElementById('docselector').disabled = true
         location.reload()
     })
 }
 
-/**
- *  Initializes the API client library and sets up sign-in state
- *  listeners.
- */
+function handleSignInClick(event) {
+    gapi.auth2.getAuthInstance().signIn({
+        prompt: 'select_account'
+    });
+}
+
+function handlePageLoad() {
+    console.log('loaded page')
+    gapi.load('client:auth2', initClient);
+}
+
+// initialize google stuff on page load
 function initClient() {
 
   console.log('in initClient')
@@ -55,28 +53,32 @@ function initClient() {
     ux_mode: 'redirect',
   }).then(function () {
     console.log('initialized')
-    // Sign in if necessary:
+    // toggle sign in/sign out buttons as necessary:
     if(!gapi.auth2.getAuthInstance().isSignedIn.get()) {
-        console.log('signing in')
-        gapi.auth2.getAuthInstance().signIn({
-            prompt: 'select_account'
-        });
+        // not signed in - show sign in button, don't load picker
+        document.getElementById('signout').style.display='none';
+        document.getElementById('googleSignIn').style.display='inline-block';
+    }
+    else {
+        //signed in - show sign out button, load picker
+        document.getElementById('signout').style.display='inline-block';
+        document.getElementById('googleSignIn').style.display='none';
+
+        // Initialize file picker:  
+        gapi.load('picker', initPicker);
+
+        // Load the file (if one is specified)
+        if(urlParams.has('fileId')) {
+            showFileHTML();
+        }
     }
 
-    // initialize settings:
+    // initialize settings 
+    // (after sign in flow has happened, because sign in flow messes with url parameters in undocumented ways):
     setSize()
     setScrollSpeed()
     setMirrored()
     setAutoScroll()
-
-
-    // Initialize file picker:  
-    gapi.load('picker', initPicker);
-
-    // Loat the file (if one is specified)
-    if(urlParams.has('fileId')) {
-        showFileHTML();
-    }
   }, function(error) {
 
     console.log('error')
